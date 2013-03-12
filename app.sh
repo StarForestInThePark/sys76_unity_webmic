@@ -1,6 +1,6 @@
 #!/bin/bash
 CWD=`pwd`
-LAUNCH_APP=$CWD/app.py
+LAUNCH_APP=$HOME/work/unity/app.py
 
 pidfile=$CWD/unity_webmic.pid
 
