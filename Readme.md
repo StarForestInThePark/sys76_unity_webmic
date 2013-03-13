@@ -23,11 +23,17 @@ work until the application is closed.
 
 This was originally created and tested on and for a Gazelle System76 laptop.
 
+
 Issues: 
+    
+    
     Hardcoded icon path, need to create a make install or use a gtk theme.
 
 TODO: 
-    Create an icom theme to remove the hardcoded path, and create icons to give
-    visual feedback of the microphones/webcams status.
+    
+    
+    Create and use GTK theme to remove the icons hardcoded path and create icons 
+    to give visual feedback of the microphones/webcams status.
 
+    
     Package this and create an installer for unity application indicator.
