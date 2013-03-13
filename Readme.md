@@ -1,8 +1,8 @@
 Web/Microphone muting application
 -------------------
 
-This application was created as I was annoyed that there was not a Unity app that I
-could use to quickly check my webcam and microphone status.
+This application was created as I was annoyed that there was not a Unity app 
+that I could use to quickly check my webcam and microphone status.
 
 It assumes a couple things:
  * Gtk2 and its python bindings are installed and available.
@@ -12,15 +12,22 @@ It assumes a couple things:
 
 Before this will work you will need to add the following line to your sudoers file:
 
-<your_username>   ALL=NOPASSWD: /sbin/modprobe   uvcvideo
-
 Example:
     raptorx  ALL=NOPASSWD: /sbin/modprobe uvcvideo
 
+If you want this to load on login add an entry using Ubuntu's StartupApplications.
 
-If you have an application that is currently using the video driver it will not work.
+If you have an application that is currently using the video driver it will not
+work until the application is closed.
 
 
 This was originally created and tested on and for a Gazelle System76 laptop.
 
+Issues: 
+    Hardcoded icon path, need to create a make install or use a gtk theme.
 
+TODO: 
+    Create an icom theme to remove the hardcoded path, and create icons to give
+    visual feedback of the microphones/webcams status.
+
+    Package this and create an installer for unity application indicator.

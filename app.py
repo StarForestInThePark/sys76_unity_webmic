@@ -18,11 +18,11 @@ bus = dbus.SessionBus()
 label_change = lambda window, message, t_status: window.set_label(
     message.format(status=en_den(t_status)))
 
-def my_func(*args, **kwargs):
+def dbus_mic_status_listener(*args, **kwargs):
     ''' This receives the status updates from the microphone if muted/unmuted
     externally to keep the state consistent '''
 
-    mute_state = args[0][0][1]['x-canonical-ido-voip-input-mute']
+    mute_state = args[0][0][1]['x-canonical-ido-voip-input-mute'] # ugly
     label_change(mic_label, mic_status_message, mute_state)
 
 def menu_click(window, buf):
@@ -42,34 +42,31 @@ if __name__ == '__main__':
                                        '/home/matt/work/unity/icon.png', # icon definition
                                        appindicator.CATEGORY_HARDWARE)
     indicator.set_status(appindicator.STATUS_ACTIVE)
-    indicator.set_attention_icon('indicator-messages-new')
 
     menu = gtk.Menu()
 
-    mic_menu_item = gtk.MenuItem(
+    mic_label = gtk.MenuItem(
         mic_status_message.format(
             status=en_den(webmic.microphone())
         )
     )
-    mic_label = mic_menu_item
 
-    webcam_menu_item = gtk.MenuItem(
+    wc_label = gtk.MenuItem(
         webcam_status_message.format(
             status=en_den(webmic.webcam())
         )
     )
-    wc_label = webcam_menu_item
 
-    webcam_menu_item.connect('activate', menu_click, "web")
-    mic_menu_item.connect('activate', menu_click, "mic")
+    wc_label.connect('activate', menu_click, "web")
+    mic_label.connect('activate', menu_click, "mic")
 
-    menu.append(mic_menu_item)
-    menu.append(webcam_menu_item)
+    menu.append(mic_label)
+    menu.append(wc_label)
 
-    mic_menu_item.show()
-    webcam_menu_item.show()
+    mic_label.show()
+    wc_label.show()
     indicator.set_menu(menu)
-    bus.add_signal_receiver(my_func,
+    bus.add_signal_receiver(dbus_mic_status_listener,
                             dbus_interface="com.canonical.dbusmenu",
                             path="/com/canonical/indicator/sound/menu",
                             )
