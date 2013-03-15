@@ -63,6 +63,9 @@ def set_mic_icon():
 
 
 if __name__ == '__main__':
+    main()
+
+def main():
     global mic_label
     global wc_label
     global indicator
