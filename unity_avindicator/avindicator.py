@@ -61,10 +61,6 @@ def set_mic_icon():
         else:
             indicator.set_icon(MIC_DISABLED)
 
-
-if __name__ == '__main__':
-    main()
-
 def main():
     global mic_label
     global wc_label
@@ -120,3 +116,6 @@ def main():
     loop = gobject.MainLoop()
     loop.run()
     gtk.main()
+
+if __name__ == '__main__':
+    main()
