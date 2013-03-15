@@ -7,6 +7,11 @@ from dbus.mainloop.glib import DBusGMainLoop
 
 import webmic
 
+ICON_PATH = '/home/matt/work/unity/{0}'
+
+MIC_ENABLED = ICON_PATH.format('mic_red.png')
+MIC_DISABLED = ICON_PATH.format('mic_green.png')
+MIC_ICON = ICON_PATH.format('mic.png')
 
 mic_status_message = "{status} Microphone"
 webcam_status_message = "{status} WebCam"
@@ -17,6 +22,7 @@ bus = dbus.SessionBus()
 
 label_change = lambda window, message, t_status: window.set_label(
     message.format(status=en_den(t_status)))
+
 
 def dbus_mic_status_listener(*args, **kwargs):
     ''' This receives the status updates from the microphone if muted/unmuted
@@ -32,14 +38,22 @@ def menu_click(window, buf):
     elif buf == 'mic':
         webmic.microphone_toggle()
         label_change(window, mic_status_message, webmic.microphone())
+        set_mic_icon()
+
+def set_mic_icon():
+        if webmic.microphone():
+            indicator.set_icon(MIC_ENABLED)
+        else:
+            indicator.set_icon(MIC_DISABLED)
 
 if __name__ == '__main__':
     global mic_label
     global wc_label
+    global indicator
 
     indicator = appindicator.Indicator('webcam-status-indicator',
                                        # TODO: create icons and use themes man
-                                       '/home/matt/work/unity/icon.png', # icon definition
+                                       MIC_ICON,
                                        appindicator.CATEGORY_HARDWARE)
     indicator.set_status(appindicator.STATUS_ACTIVE)
 
@@ -50,6 +64,7 @@ if __name__ == '__main__':
             status=en_den(webmic.microphone())
         )
     )
+    set_mic_icon()
 
     wc_label = gtk.MenuItem(
         webcam_status_message.format(
