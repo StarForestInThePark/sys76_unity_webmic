@@ -3,7 +3,6 @@
 import gtk
 import appindicator
 import dbus, gobject
-from dbus.mainloop.glib import DBusGMainLoop
 
 import unity_avindicator
 
@@ -22,49 +21,51 @@ mic_status_message = "{status} Microphone"
 webcam_status_message = "{status} WebCam"
 en_den = lambda x: "Enable" if x else "Disable"
 
-dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
-bus = dbus.SessionBus()
-
-label_change = lambda window, message, t_status: window.set_label(
-    message.format(status=en_den(t_status)))
-
-
-def dbus_mic_status_listener(*args, **kwargs):
-    ''' This receives the status updates from the microphone if muted/unmuted
-    externally to keep the state consistent '''
-
-    mute_state = args[0][0][1]['x-canonical-ido-voip-input-mute'] # ugly
-    label_change(mic_label, mic_status_message, mute_state)
-    set_mic_icon()
-
-def menu_click(window, buf):
-    if buf == 'web':
-        unity_avindicator.webmic.webcam_toggle()
-        label_change(window, webcam_status_message,
-                     unity_avindicator.webmic.webcam())
-        set_wc_icon()
-    elif buf == 'mic':
-        unity_avindicator.webmic.microphone_toggle()
-        label_change(window, mic_status_message,
-                     unity_avindicator.webmic.microphone())
-        set_mic_icon()
-
-def set_wc_icon():
-        if unity_avindicator.webmic.webcam():
-            wc_indicator.set_icon(EYE_DISABLED)
-        else:
-            wc_indicator.set_icon(EYE_ENABLED)
-
-def set_mic_icon():
-        if unity_avindicator.webmic.microphone():
-            indicator.set_icon(MIC_ENABLED)
-        else:
-            indicator.set_icon(MIC_DISABLED)
-
 def main():
     global mic_label
     global wc_label
     global indicator
+
+    from dbus.mainloop.glib import DBusGMainLoop
+    dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+    bus = dbus.SessionBus()
+
+    label_change = lambda window, message, t_status: window.set_label(
+        message.format(status=en_den(t_status)))
+
+
+    def dbus_mic_status_listener(*args, **kwargs):
+        ''' This receives the status updates from the microphone if muted/unmuted
+        externally to keep the state consistent '''
+
+        mute_state = args[0][0][1]['x-canonical-ido-voip-input-mute'] # ugly
+        label_change(mic_label, mic_status_message, mute_state)
+        set_mic_icon()
+
+    def menu_click(window, buf):
+        if buf == 'web':
+            unity_avindicator.webmic.webcam_toggle()
+            label_change(window, webcam_status_message,
+                        unity_avindicator.webmic.webcam())
+            set_wc_icon()
+        elif buf == 'mic':
+            unity_avindicator.webmic.microphone_toggle()
+            label_change(window, mic_status_message,
+                        unity_avindicator.webmic.microphone())
+            set_mic_icon()
+
+    def set_wc_icon():
+            if unity_avindicator.webmic.webcam():
+                wc_indicator.set_icon(EYE_DISABLED)
+            else:
+                wc_indicator.set_icon(EYE_ENABLED)
+
+    def set_mic_icon():
+            if unity_avindicator.webmic.microphone():
+                indicator.set_icon(MIC_ENABLED)
+            else:
+                indicator.set_icon(MIC_DISABLED)
+
 
     indicator = appindicator.Indicator('microphone-status-indicator',
                                        # TODO: create icons and use themes man
