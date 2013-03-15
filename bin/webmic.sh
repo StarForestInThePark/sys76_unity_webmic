@@ -1,6 +1,6 @@
 #!/bin/bash
 CWD=`pwd`
-LAUNCH_APP=$HOME/work/unity/app.py
+LAUNCH_APP=./unity_avindicator/avindicator.py
 
 pidfile=$CWD/unity_webmic.pid
 
