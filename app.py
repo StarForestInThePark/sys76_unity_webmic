@@ -7,11 +7,16 @@ from dbus.mainloop.glib import DBusGMainLoop
 
 import webmic
 
-ICON_PATH = '/home/matt/work/unity/{0}'
+MIC_ICON_PATH = '/home/matt/work/unity/{0}'
+WC_ICON_PATH = '/home/matt/work/unity/{0}'
 
-MIC_ENABLED = ICON_PATH.format('mic_red.png')
-MIC_DISABLED = ICON_PATH.format('mic_green.png')
-MIC_ICON = ICON_PATH.format('mic.png')
+MIC_ENABLED = MIC_ICON_PATH.format('mic_red.png')
+MIC_DISABLED = MIC_ICON_PATH.format('mic_green.png')
+MIC_ICON = MIC_ICON_PATH.format('mic.png')
+
+EYE_ENABLED = WC_ICON_PATH.format('eye_green.png')
+EYE_DISABLED = WC_ICON_PATH.format('eye_red.png')
+EYE_ICON = WC_ICON_PATH.format('eye.png')
 
 mic_status_message = "{status} Microphone"
 webcam_status_message = "{status} WebCam"
@@ -30,15 +35,23 @@ def dbus_mic_status_listener(*args, **kwargs):
 
     mute_state = args[0][0][1]['x-canonical-ido-voip-input-mute'] # ugly
     label_change(mic_label, mic_status_message, mute_state)
+    set_mic_icon()
 
 def menu_click(window, buf):
     if buf == 'web':
         webmic.webcam_toggle()
         label_change(window, webcam_status_message, webmic.webcam())
+        set_wc_icon()
     elif buf == 'mic':
         webmic.microphone_toggle()
         label_change(window, mic_status_message, webmic.microphone())
         set_mic_icon()
+
+def set_wc_icon():
+        if webmic.webcam():
+            wc_indicator.set_icon(EYE_DISABLED)
+        else:
+            wc_indicator.set_icon(EYE_ENABLED)
 
 def set_mic_icon():
         if webmic.microphone():
@@ -46,18 +59,27 @@ def set_mic_icon():
         else:
             indicator.set_icon(MIC_DISABLED)
 
+
 if __name__ == '__main__':
     global mic_label
     global wc_label
     global indicator
 
-    indicator = appindicator.Indicator('webcam-status-indicator',
+    indicator = appindicator.Indicator('microphone-status-indicator',
                                        # TODO: create icons and use themes man
                                        MIC_ICON,
                                        appindicator.CATEGORY_HARDWARE)
     indicator.set_status(appindicator.STATUS_ACTIVE)
 
+    wc_indicator = appindicator.Indicator('webcam-status-indicator',
+                                       # TODO: create icons and use themes man
+                                       EYE_ICON,
+                                       appindicator.CATEGORY_HARDWARE)
+    wc_indicator.set_status(appindicator.STATUS_ACTIVE)
+
+
     menu = gtk.Menu()
+    wc_menu = gtk.Menu()
 
     mic_label = gtk.MenuItem(
         mic_status_message.format(
@@ -71,16 +93,20 @@ if __name__ == '__main__':
             status=en_den(webmic.webcam())
         )
     )
+    set_wc_icon()
 
     wc_label.connect('activate', menu_click, "web")
     mic_label.connect('activate', menu_click, "mic")
 
     menu.append(mic_label)
-    menu.append(wc_label)
+    wc_menu.append(wc_label)
 
     mic_label.show()
     wc_label.show()
+
     indicator.set_menu(menu)
+    wc_indicator.set_menu(wc_menu)
+
     bus.add_signal_receiver(dbus_mic_status_listener,
                             dbus_interface="com.canonical.dbusmenu",
                             path="/com/canonical/indicator/sound/menu",
