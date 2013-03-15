@@ -19,5 +19,8 @@ def webcam_toggle():
 microphone = lambda: returncode("amixer get Capture | grep Capt | grep off") == 0
 microphone_toggle = lambda: returncode("amixer set Capture toggle")
 
-if __name__ == '__main__':
+def main():
     print "Mic muted ? {0}, Webcam off ? {1}".format(microphone(), webcam())
+
+if __name__ == '__main__':
+    main()
