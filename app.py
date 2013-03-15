@@ -7,8 +7,8 @@ from dbus.mainloop.glib import DBusGMainLoop
 
 import webmic
 
-MIC_ICON_PATH = '/home/matt/work/unity/{0}'
-WC_ICON_PATH = '/home/matt/work/unity/{0}'
+MIC_ICON_PATH = '/home/matt/work/unity/icons/{0}'
+WC_ICON_PATH = '/home/matt/work/unity/icons/{0}'
 
 MIC_ENABLED = MIC_ICON_PATH.format('mic_red.png')
 MIC_DISABLED = MIC_ICON_PATH.format('mic_green.png')
