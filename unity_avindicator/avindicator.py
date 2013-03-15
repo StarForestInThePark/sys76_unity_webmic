@@ -5,7 +5,7 @@ import appindicator
 import dbus, gobject
 from dbus.mainloop.glib import DBusGMainLoop
 
-import webmic
+import avindicator
 
 MIC_ICON_PATH = '/home/matt/work/unity/icons/{0}'
 WC_ICON_PATH = '/home/matt/work/unity/icons/{0}'
