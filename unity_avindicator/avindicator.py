@@ -1,21 +1,24 @@
 # -*- coding: utf-8 -*-
-
+import os
 import gtk
 import appindicator
 import dbus, gobject
 
-import unity_avindicator
+import webmic
 
-MIC_ICON_PATH = '/home/matt/work/unity/icons/{0}'
-WC_ICON_PATH = '/home/matt/work/unity/icons/{0}'
+location = lambda x: os.path.join(
+    str(os.path.dirname(os.path.realpath(__file__))), str(x))
 
-MIC_ENABLED = MIC_ICON_PATH.format('mic_red.png')
-MIC_DISABLED = MIC_ICON_PATH.format('mic_green.png')
-MIC_ICON = MIC_ICON_PATH.format('mic.png')
+MIC_ICON_PATH = lambda x: location('icons/{0}'.format(x))
+WC_ICON_PATH = lambda x: location('icons/{0}'.format(x))
 
-EYE_ENABLED = WC_ICON_PATH.format('eye_green.png')
-EYE_DISABLED = WC_ICON_PATH.format('eye_red.png')
-EYE_ICON = WC_ICON_PATH.format('eye.png')
+MIC_ENABLED = MIC_ICON_PATH('mic_red.png')
+MIC_DISABLED = MIC_ICON_PATH('mic_green.png')
+MIC_ICON = MIC_ICON_PATH('mic.png')
+
+EYE_ENABLED = WC_ICON_PATH('eye_green.png')
+EYE_DISABLED = WC_ICON_PATH('eye_red.png')
+EYE_ICON = WC_ICON_PATH('eye.png')
 
 mic_status_message = "{status} Microphone"
 webcam_status_message = "{status} WebCam"
@@ -44,24 +47,24 @@ def main():
 
     def menu_click(window, buf):
         if buf == 'web':
-            unity_avindicator.webmic.webcam_toggle()
+            webmic.webcam_toggle()
             label_change(window, webcam_status_message,
-                        unity_avindicator.webmic.webcam())
+                        webmic.webcam())
             set_wc_icon()
         elif buf == 'mic':
-            unity_avindicator.webmic.microphone_toggle()
+            webmic.microphone_toggle()
             label_change(window, mic_status_message,
-                        unity_avindicator.webmic.microphone())
+                        webmic.microphone())
             set_mic_icon()
 
     def set_wc_icon():
-            if unity_avindicator.webmic.webcam():
+            if webmic.webcam():
                 wc_indicator.set_icon(EYE_DISABLED)
             else:
                 wc_indicator.set_icon(EYE_ENABLED)
 
     def set_mic_icon():
-            if unity_avindicator.webmic.microphone():
+            if webmic.microphone():
                 indicator.set_icon(MIC_ENABLED)
             else:
                 indicator.set_icon(MIC_DISABLED)
@@ -85,14 +88,14 @@ def main():
 
     mic_label = gtk.MenuItem(
         mic_status_message.format(
-            status=en_den(unity_avindicator.webmic.microphone())
+            status=en_den(webmic.microphone())
         )
     )
     set_mic_icon()
 
     wc_label = gtk.MenuItem(
         webcam_status_message.format(
-            status=en_den(unity_avindicator.webmic.webcam())
+            status=en_den(webmic.webcam())
         )
     )
     set_wc_icon()

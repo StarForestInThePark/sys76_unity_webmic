@@ -4,6 +4,8 @@ LAUNCH_APP=./unity_avindicator/avindicator.py
 
 pidfile=$CWD/unity_webmic.pid
 
+echo $CWD
+
 function pidfile_cleanup {
     if [ -e "$pidfile" ]; then
         echo $pidfile removed.
