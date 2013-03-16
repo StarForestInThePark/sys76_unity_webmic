@@ -9,7 +9,7 @@ from setuptools import setup
 
 
 setup(name='unity_avindicator',
-      version='0.6',
+      version='0.7',
       description="AV enable/disable Unity Application Indicator",
       long_description=open('README.txt').read(),
       license="COPYING",
