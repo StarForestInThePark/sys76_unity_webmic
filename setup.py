@@ -8,15 +8,11 @@ to DBus for microphone status updates.
 from setuptools import setup
 
 
-def readme():
-    with open('README.rst') as f:
-        return f.read()
-
-
 setup(name='unity_avindicator',
       version='0.6',
       description="AV enable/disable Unity Application Indicator",
-      long_description='Originally developed for a System76 Gazelle laptop.',
+      long_description=open('README.txt').read(),
+      license="COPYING",
       classifiers=[
           'Development Status :: 3 - Alpha',
           'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
@@ -27,8 +23,6 @@ setup(name='unity_avindicator',
       url='http://www.github.com/mgmtech/sys76_unity_webmic',
       author='Matthew Miller',
       author_email='matthewgarrettmiller@gmail.com',
-      license='GPLv3',
-      packages=['unity_avindicator',],
       zip_safe=False,
       install_requires=[
         'execute',
@@ -38,7 +32,9 @@ setup(name='unity_avindicator',
       entry_points={
           'console_scripts': [
               'webmic-status=unity_avindicator.webmic:main',
-              'avindicator=unity_avindicator.avinficator:main'
+              'avindicator=unity_avindicator.avindicator:main'
           ]
-      }
+      },
+      include_package_data=True,
+      packages=['unity_avindicator'],
     )
