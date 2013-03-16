@@ -15,16 +15,9 @@ Before this will work you will need to add the following line to your sudoers fi
 Example:
     raptorx  ALL=NOPASSWD: /sbin/modprobe uvcvideo
 
-If you want this to load on login add an entry using Ubuntu's StartupApplication.
+If you want this to load on login add an entry in Ubuntu's StartupApplications.
 
 If you have an application that is currently using the webcam it will not
 work until the application is closed.
 
 This was originally created and tested on and for a Gazelle System76 laptop.
-
-
-Issues: 
-    Hardcoded icon path, need to create a make install or use a gtk theme.
-
-TODO: 
-    Package this and create an installer for unity application indicator.

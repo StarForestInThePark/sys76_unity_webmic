@@ -19,9 +19,9 @@ setup(name='unity_avindicator',
       long_descriptin='Originally developed for a System76 Gazelle laptop.',
       classifiers=[
           'Development Status :: 3 - Alpha',
-          'License :: OSI Approved :: GPLv3 License',
+          'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
           'Programming Language :: Python :: 2.7',
-          'Topic :: AV Control :: Multimedia',
+          'Topic :: Multimedia :: Sound/Audio'
       ],
       keywords='gazelle system76 avcontrol webcam microphone appindicator indicator',
       url='http://www.github.com/mgmtech/sys76_unity.git',
@@ -35,7 +35,7 @@ setup(name='unity_avindicator',
       ],
       test_suite='nose.collector',
       tests_require=['nose'],
-      scripts=['bin/webmic.sh'],
+      scripts=['bin/avindicator.sh'],
       entry_points={
           'console_scripts': ['webmic-status=unity_avindicator.webmic:main']}
       )
