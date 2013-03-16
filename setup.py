@@ -35,8 +35,10 @@ setup(name='unity_avindicator',
       ],
       test_suite='nose.collector',
       tests_require=['nose'],
-      scripts=['bin/avindicator.sh'],
       entry_points={
-          'console_scripts': ['webmic-status=unity_avindicator.webmic:main']}
-      )
-
+          'console_scripts': [
+              'webmic-status=unity_avindicator.webmic:main',
+              'avindicator=unity_avindicator.avinficator:main'
+          ]
+      }
+    )
