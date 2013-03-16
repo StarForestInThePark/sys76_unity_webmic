@@ -14,7 +14,7 @@ def readme():
 
 
 setup(name='unity_avindicator',
-      version='0.1',
+      version='0.3',
       description="AV enable/disable Unity Application Indicator",
       long_descriptin='Originally developed for a System76 Gazelle laptop.',
       classifiers=[
@@ -24,7 +24,7 @@ setup(name='unity_avindicator',
           'Topic :: Multimedia :: Sound/Audio'
       ],
       keywords='gazelle system76 avcontrol webcam microphone appindicator indicator',
-      url='http://www.github.com/mgmtech/sys76_unity.git',
+      url='http://www.github.com/mgmtech/sys76_unity_webmic',
       author='Matthew Miller',
       author_email='matthewgarrettmiller@gmail.com',
       license='GPLv3',

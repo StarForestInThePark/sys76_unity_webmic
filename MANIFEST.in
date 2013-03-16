@@ -1,2 +1,2 @@
 include README.rst
-include icons/*.png
+include unity_avindicator/icons/*.png
