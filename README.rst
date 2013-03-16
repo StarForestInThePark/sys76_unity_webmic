@@ -21,3 +21,7 @@ If you have an application that is currently using the webcam it will not
 work until the application is closed.
 
 This was originally created and tested on and for a Gazelle System76 laptop.
+
+The included tests will determine if the toggling of the webcam and microphone work.
+
+Once installed to run the application manually type: avindicator.sh
