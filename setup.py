@@ -16,7 +16,7 @@ def readme():
 setup(name='unity_avindicator',
       version='0.4',
       description="AV enable/disable Unity Application Indicator",
-      long_descriptin='Originally developed for a System76 Gazelle laptop.',
+      long_description='Originally developed for a System76 Gazelle laptop.',
       classifiers=[
           'Development Status :: 3 - Alpha',
           'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
